@@ -98,15 +98,10 @@ void AFirstPersonCharacter::BeginPlay()
 	*/
 	Mesh1P->SetHiddenInGame(false, true);
 
-	if (GunBlueprint == NULL)
+	if (GunBlueprint != NULL)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("GunBlueprint is set to NULL"))
-		return;
-	}
-	else
-	{
-		Gun = GetWorld()->SpawnActor<AGun>(GunBlueprint);
 		Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+		Gun->AnimInstance = Mesh1P->GetAnimInstance();
 	}
 }
 
@@ -115,6 +110,14 @@ void AFirstPersonCharacter::BeginPlay()
 
 void AFirstPersonCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
+	if (GunBlueprint == NULL)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("GunBlueprint is set to NULL"))
+		return;
+	}
+	Gun = GetWorld()->SpawnActor<AGun>(GunBlueprint);
+
+
 	// set up gameplay key bindings
 	check(PlayerInputComponent);
 
@@ -124,7 +127,7 @@ void AFirstPersonCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 	//InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AFirstPersonCharacter::TouchStarted);
 	if (EnableTouchscreenMovement(PlayerInputComponent) == false)
 	{
-		//PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AFirstPersonCharacter::OnFire);
+		PlayerInputComponent->BindAction("Fire", IE_Pressed, Gun, &AGun::OnFire);
 	}
 
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AFirstPersonCharacter::OnResetVR);
@@ -167,7 +170,7 @@ void AFirstPersonCharacter::EndTouch(const ETouchIndex::Type FingerIndex, const 
 	}
 	if ((FingerIndex == TouchItem.FingerIndex) && (TouchItem.bMoved == false))
 	{
-		//OnFire();
+		//Gun->OnFire();
 	}
 	TouchItem.bIsPressed = false;
 }
