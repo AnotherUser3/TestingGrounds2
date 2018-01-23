@@ -30,7 +30,7 @@ class TESTINGGROUNDS2_API AGun : public AActor
 		virtual void Tick(float DeltaSeconds) override;
 
 		/** Projectile class to spawn */
-		UPROPERTY(EditDefaultsOnly, Category = Projectile)
+		UPROPERTY(EditDefaultsOnly, Category = "Projectile")
 			TSubclassOf<class ABallProjectile> ProjectileClass;
 
 		/** Sound to play each time we fire */
@@ -45,6 +45,7 @@ class TESTINGGROUNDS2_API AGun : public AActor
 			class UAnimInstance* AnimInstance;
 
 		/** Fires a projectile. */
+		UFUNCTION(BlueprintCallable, Category = "Input")
 		void OnFire();
 
 	protected:
