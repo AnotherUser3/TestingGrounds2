@@ -23,13 +23,6 @@ class AFirstPersonCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FirstPersonCameraComponent;
 
-	/** Motion controller (right hand) */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UMotionControllerComponent* R_MotionController;
-
-	/** Motion controller (left hand) */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UMotionControllerComponent* L_MotionController;
 
 public:
 	AFirstPersonCharacter();
@@ -49,21 +42,14 @@ public:
 	float BaseLookUpRate;
 
 	/** Gun muzzle's offset from the characters location */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
-	FVector GunOffset;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
+	//FVector GunOffset;
 
-	/** Whether to use motion controller location for aiming. */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	uint32 bUsingMotionControllers : 1;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	TSubclassOf<class AGun> GunBlueprint;
+	//UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	//TSubclassOf<class AGun> GunBlueprint;
 
 protected:
 	virtual void BeginPlay();
-
-	/** Resets HMD orientation and position in VR. */
-	void OnResetVR();
 
 	/** Handles moving forward/backward */
 	void MoveForward(float Val);
@@ -110,7 +96,7 @@ protected:
 
 private:
 
-	AGun* Gun;
+	//AGun* Gun;
 
 
 };
