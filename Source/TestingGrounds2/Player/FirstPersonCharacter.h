@@ -14,8 +14,8 @@ class AFirstPersonCharacter : public ACharacter
 	GENERATED_BODY()
 
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
-	UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
-	class USkeletalMeshComponent* Mesh1P;
+//	UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
+//	class USkeletalMeshComponent* Mesh1P;
 
 	
 
@@ -26,6 +26,10 @@ class AFirstPersonCharacter : public ACharacter
 
 public:
 	AFirstPersonCharacter();
+
+	/** Pawn mesh: 1st person view (arms; seen only by self) */
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Mesh)
+	class USkeletalMeshComponent* Mesh1P;
 
 	/** Returns Mesh1P subobject **/
 	FORCEINLINE class USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
@@ -96,7 +100,7 @@ protected:
 
 private:
 
-	//AGun* Gun;
+//	AGun* Gun;
 
 
 };
