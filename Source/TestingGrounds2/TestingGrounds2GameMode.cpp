@@ -1,7 +1,7 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
 #include "TestingGrounds2GameMode.h"
-#include "TestingGrounds2HUD.h"
+//#include "TestingGrounds2HUD.h"
 #include "Player/FirstPersonCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 
@@ -13,5 +13,5 @@ ATestingGrounds2GameMode::ATestingGrounds2GameMode()
 	DefaultPawnClass = PlayerPawnClassFinder.Class;
 
 	// use our custom HUD class
-	HUDClass = ATestingGrounds2HUD::StaticClass();
+	//HUDClass = ATestingGrounds2HUD::StaticClass();
 }

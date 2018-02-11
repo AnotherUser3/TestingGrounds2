@@ -6,7 +6,7 @@
 #include "TextureResource.h"
 #include "CanvasItem.h"
 #include "UObject/ConstructorHelpers.h"
-
+/*
 ATestingGrounds2HUD::ATestingGrounds2HUD()
 {
 	// Set the crosshair texture
@@ -33,3 +33,4 @@ void ATestingGrounds2HUD::DrawHUD()
 	TileItem.BlendMode = SE_BLEND_Translucent;
 	Canvas->DrawItem( TileItem );
 }
+*/
