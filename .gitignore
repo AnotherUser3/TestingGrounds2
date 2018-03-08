@@ -12,3 +12,5 @@ Saved
 *.xcodeproj
 *.xcworkspace
 Content/Dynamic/LevelsDynamic/FirstPersonExampleMap_BuiltData.uasset
+Content/Static/SoulCave/
+Content/Static/SoulCity/
