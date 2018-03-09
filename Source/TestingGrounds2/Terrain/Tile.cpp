@@ -12,16 +12,18 @@ ATile::ATile()
 
 }
 
-void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn, float radius)
+void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn, float radius, float MinScale, float MaxScale)
 {
 	int NumberToSpawn = FMath::RandRange(MinSpawn, MaxSpawn);
 	for (size_t i = 0; i < NumberToSpawn; i++)
 	{
 		FVector SpawnPoint;
-		bool foundLocation = FindEmptyLocation(SpawnPoint, radius);
+		float RandomScale = FMath::RandRange(MinScale, MaxScale);
+		bool foundLocation = FindEmptyLocation(SpawnPoint, radius * RandomScale);
 		if (foundLocation)
 		{
-			SpawnActor(ToSpawn, SpawnPoint);
+			float RandomRotation = FMath::RandRange(-180.0f, 180.0f);
+			SpawnActor(ToSpawn, SpawnPoint, RandomRotation, RandomScale);
 		}
 	}
 
@@ -32,7 +34,7 @@ bool ATile::FindEmptyLocation(FVector& OutLocation, float radius)
 	FVector Max(4000, 2000, 30);
 	FBox Bounds(Min, Max);
 
-	const int MAX_ATTEMPTS = 100;
+	const int MAX_ATTEMPTS = 30;
 	for (size_t i = 0; i < MAX_ATTEMPTS; i++)
 	{
 		FVector CandidatePoint = FMath::RandPointInBox(Bounds);
@@ -45,11 +47,13 @@ bool ATile::FindEmptyLocation(FVector& OutLocation, float radius)
 
 	return false;
 }
-void ATile::SpawnActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint)
+void ATile::SpawnActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint, float Rotation, float Scale)
 {
 		AActor* SpawnedActor = GetWorld()->SpawnActor<AActor>(ToSpawn);
 		SpawnedActor->SetActorRelativeLocation(SpawnPoint);
 		SpawnedActor->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
+		SpawnedActor->SetActorRotation(FRotator(0, Rotation, 0));
+		SpawnedActor->SetActorScale3D(FVector(Scale));
 }
 
 // Called when the game starts or when spawned
@@ -79,16 +83,15 @@ bool ATile::CanSpawnAtLocation(FVector Location, float Radius)
 		FCollisionShape::MakeSphere(Radius)
 	);
 
-	FColor ResultColor = HasHit ? FColor::Red : FColor::Green;
-		DrawDebugSphere(
-			GetWorld(),
-			GlobalLocation,
-			Radius,
-			4,
-			ResultColor,
-			true
-		);
-
+	//FColor ResultColor = HasHit ? FColor::Red : FColor::Green;
+	//	DrawDebugSphere(
+	//		GetWorld(),
+	//		GlobalLocation,
+	//		Radius,
+	//		4,
+	//		ResultColor,
+	//		true
+	//	);
 
 	return !HasHit;
 }
