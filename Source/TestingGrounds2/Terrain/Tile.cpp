@@ -4,6 +4,7 @@
 #include "DrawDebugHelpers.h"
 #include "EngineUtils.h"
 #include "ActorPool.h"
+#include "AI/Navigation/NavigationSystem.h"
 
 // Sets default values
 ATile::ATile()
@@ -13,6 +14,7 @@ ATile::ATile()
 
 	MinSpawningExtent = FVector(0, -2000, 30);
 	MaxSpawningExtent = FVector(4000, 2000, 30);
+	NavigationBoundsOffset = FVector(2000, 0, 0);
 }
 
 void ATile::SetPool(UActorPool* InPool)
@@ -34,7 +36,8 @@ void ATile::PositionNavMeshBoundsVolume()
 		return;
 	}
 	UE_LOG(LogTemp, Warning, TEXT("[%s] Checked out: {%s}"), *GetName(), *NavMeshBoundsVolume->GetName());
-	NavMeshBoundsVolume->SetActorLocation(GetActorLocation());
+	NavMeshBoundsVolume->SetActorLocation(GetActorLocation() + NavigationBoundsOffset);
+	GetWorld()->GetNavigationSystem()->Build();
 }
 
 
