@@ -44,7 +44,18 @@ void ATile::PositionNavMeshBoundsVolume()
 
 void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn, float radius, float MinScale, float MaxScale)
 {
-	//TArray<FSpawnPosition> SpawnPositions;
+	TArray<FSpawnPosition> SpawnPositions = RandomSpawnPositions(MinSpawn, MaxSpawn, radius, MinScale, MaxScale);
+	for (FSpawnPosition SpawnPosition : SpawnPositions)
+	{
+		PlaceActor(ToSpawn, SpawnPosition);
+	}
+
+}
+
+
+TArray<FSpawnPosition> ATile::RandomSpawnPositions(int MinSpawn, int MaxSpawn, float radius, float MinScale, float MaxScale)
+{
+	TArray<FSpawnPosition> SpawnPositions;
 	int NumberToSpawn = FMath::RandRange(MinSpawn, MaxSpawn);
 	for (size_t i = 0; i < NumberToSpawn; i++)
 	{
@@ -54,11 +65,14 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn,
 		if (foundLocation)
 		{
 			SpawnPosition.Rotation = FMath::RandRange(-180.0f, 180.0f);
-			PlaceActor(ToSpawn, SpawnPosition);
+			SpawnPositions.Add(SpawnPosition);
 		}
 	}
-
+	return SpawnPositions;
 }
+
+
+
 bool ATile::FindEmptyLocation(FVector& OutLocation, float radius)
 {
 	FBox Bounds(MinSpawningExtent, MaxSpawningExtent);

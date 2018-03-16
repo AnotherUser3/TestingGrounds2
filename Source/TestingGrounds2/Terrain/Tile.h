@@ -56,6 +56,7 @@ public:
 private:
 
 	bool CanSpawnAtLocation(FVector Location, float Radius);
+	TArray<FSpawnPosition> RandomSpawnPositions(int MinSpawn, int MaxSpawn, float radius, float MinScale, float MaxScale);
 	bool FindEmptyLocation(FVector& OutLocation, float radius);
 	void PlaceActor(TSubclassOf<AActor> ToSpawn, FSpawnPosition SpawnPosition);
 	void PositionNavMeshBoundsVolume();
